@@ -15,6 +15,6 @@ class Autor extends Model
 
     public function autor()
     {
-        return $this->hasMany(Autor::class);
+        return $this->hasMany(Autor::class, 'autor_id');
     }
 }

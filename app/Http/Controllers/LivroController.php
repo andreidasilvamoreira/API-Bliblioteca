@@ -18,7 +18,8 @@ class LivroController extends BaseController
         $validacao = $request->validate([
             'titulo' => 'required|max:100',
             'descricao' => 'required',
-            'genero_id' => 'required',
+            'autor_nome' => 'required|string|max:100',
+            'genero_id' => 'required|exists:generos,id',
             'autor_id' => 'required'
         ]);
 

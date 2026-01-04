@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Livro extends Model
 {
     use HasFactory;
-    protected $fillable = ['titulo', 'descricao', 'genero_id', 'autor_id'];
+    protected $fillable = ['titulo', 'descricao', 'genero_id', 'autor_id', 'autor_nome'];
     public $timestamps = false;
 
     public function genero()
     {
-        return $this->belongsTo(Genero::class);
+        return $this->belongsTo(Genero::class, 'genero_id');
     }
 
     public function autor()
     {
-        return $this->belongsTo(Autor::class);
+        return $this->belongsTo(Autor::class, 'autor_id');
     }
 }

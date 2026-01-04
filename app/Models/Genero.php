@@ -13,6 +13,6 @@ class Genero extends Model
 
     public function genero()
     {
-        return $this->hasMany(Genero::class);
+        return $this->hasMany(Genero::class, 'genero_id');
     }
 }

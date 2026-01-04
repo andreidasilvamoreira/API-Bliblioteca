@@ -35,34 +35,4 @@ class GeneroController extends BaseController
         return response()->json($genero);
     }
 
-    public function atualizarGenero(Request $request, $id)
-    {
-        $validacao = $request->validate([
-            'nome' => 'sometimes|required|max:50',
-            'descricao' => 'sometimes|nullable|max:255',
-        ]);
-
-        $genero = Genero::find($id);
-
-        if (!$genero) {
-            return response()->json(['message' => 'Gênero não encontrado'], 404);
-        }
-
-        $genero->update($validacao);
-
-        return response()->json($genero);
-    }
-
-    public function excluirGenero($id)
-    {
-        $genero = Genero::find($id);
-
-        if (!$genero) {
-            return response()->json(['message' => 'Gênero não encontrado'], 404);
-        }
-
-        $genero->delete();
-
-        return response()->json(['message' => 'Gênero excluído com sucesso']);
-    }
 }

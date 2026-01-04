@@ -34,35 +34,4 @@ class AutorController extends BaseController
 
         return response()->json($autor);
     }
-
-    public function atualizarAutor(Request $request, $id)
-    {
-        $validacao = $request->validate([
-            'nome' => 'sometimes|required|max:100',
-            'biografia' => 'sometimes|nullable|max:1000',
-        ]);
-
-        $autor = Autor::find($id);
-
-        if (!$autor) {
-            return response()->json(['message' => 'Autor não encontrado'], 404);
-        }
-
-        $autor->update($validacao);
-
-        return response()->json($autor);
-    }
-
-    public function excluirAutor($id)
-    {
-        $autor = Autor::find($id);
-
-        if (!$autor) {
-            return response()->json(['message' => 'Autor não encontrado'], 404);
-        }
-
-        $autor->delete();
-
-        return response()->json(['message' => 'Autor excluído com sucesso']);
-    }
 }

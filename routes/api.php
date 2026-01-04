@@ -16,11 +16,7 @@ Route::delete('/livro/{id}', [LivroController::class, 'excluirLivro']);
 Route::get('/autores', [AutorController::class, 'retornaAutores']);
 Route::get('/autor/{id}', [AutorController::class, 'mostrarAutor']);
 Route::post('/autor', [AutorController::class, 'criarAutor']);
-Route::put('/autor/{id}', [AutorController::class, 'atualizarAutor']);
-Route::delete('/autor/{id}', [AutorController::class, 'excluirAutor']);
 
 Route::get('/generos', [GeneroController::class, 'retornaGeneros']);
 Route::get('/genero/{id}', [GeneroController::class, 'mostrarGenero']);
 Route::post('/genero', [GeneroController::class, 'criarGenero']);
-Route::put('/genero/{id}', [GeneroController::class, 'atualizarGenero']);
-Route::delete('/genero/{id}', [GeneroController::class, 'excluirGenero']);

@@ -14,12 +14,10 @@ return new class extends Migration
         Schema::create('livros', function (Blueprint $table) {
             $table->id();
             $table->string('titulo', 255);
-            $table->text('descicao')->nullable();
-            $table->string('genero_id');
-            $table->string('autor_id');
-
-            $table->foreign('genero_id')->references('id')->on('generos')->onDelete('cascade');
-            $table->foreign('autor_id')->references('id')->on('autores')->onDelete('cascade');
+            $table->text('descricao')->nullable();
+            $table->string('autor_nome', 255);
+            $table->foreignId('genero_id')->constrained('generos')->cascadeOnDelete();
+            $table->foreignId('autor_id')->constrained('autores')->cascadeOnDelete();
         });
     }
 
