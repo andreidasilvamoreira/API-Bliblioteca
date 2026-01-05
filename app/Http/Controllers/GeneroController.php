@@ -11,6 +11,7 @@ class GeneroController extends BaseController
     public function retornaGeneros()
     {
         return Genero::all();
+
     }
 
     public function criarGenero(Request $request)

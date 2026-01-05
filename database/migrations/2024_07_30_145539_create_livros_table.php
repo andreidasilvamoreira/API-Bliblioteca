@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('titulo', 255);
             $table->text('descricao')->nullable();
-            $table->string('autor_nome', 255);
             $table->foreignId('genero_id')->constrained('generos')->cascadeOnDelete();
             $table->foreignId('autor_id')->constrained('autores')->cascadeOnDelete();
         });

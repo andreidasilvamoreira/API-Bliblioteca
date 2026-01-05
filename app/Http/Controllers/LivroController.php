@@ -2,73 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Livro;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
-
-class LivroController extends BaseController
+use App\Services\LivroService;
+class LivroController extends Controller
 {
-    public function retornaLivros()
-    {
-        return Livro::with(['autor', 'genero'])->get();
+    protected LivroService $livroService;
+    public function __construct(LivroService $livroService){
+        $this->livroService = $livroService;
     }
 
-    public function criarLivro(Request $request)
+    public function retornaLivros()
     {
-        $validacao = $request->validate([
-            'titulo' => 'required|max:100',
-            'descricao' => 'required',
-            'autor_nome' => 'required|string|max:100',
-            'genero_id' => 'required|exists:generos,id',
-            'autor_id' => 'required'
-        ]);
-
-        $livro = Livro::create($validacao);
-
-        return response()->json($livro, 201);
+        return response()->json($this->livroService->findAll());
     }
 
     public function mostrarLivro($id)
     {
-        $livro = Livro::with(['autor', 'genero'])->find($id);
+        return response()->json($this->livroService->find($id));
+    }
 
-        if (!$livro) {
-            return response()->json(['message' => 'Livro não encontrado'], 404);
-        }
+    public function criarLivro(Request $request)
+    {
+        $validated = $request->validate([
+            'titulo' => 'required|max:100',
+            'descricao' => 'required',
+            'genero_id' => 'required|exists:generos,id',
+            'autor_id' => 'required'
+        ]);
 
-        return response()->json($livro);
+        return response()->json($this->livroService->create($validated), 201);
     }
 
     public function atualizarLivro(Request $request, $id)
     {
-        $validacao = $request->validate([
+        $validated = $request->validate([
             'titulo' => 'sometimes|required|max:100',
             'descricao' => 'sometimes|required',
             'genero_id' => 'sometimes|required|exists:generos,id',
             'autor_id' => 'sometimes|required|exists:autores,id'
         ]);
 
-        $livro = Livro::find($id);
-
-        if (!$livro) {
-            return response()->json(['message' => 'Livro não encontrado'], 404);
-        }
-
-        $livro->update($validacao);
-
-        return response()->json($livro);
+        return response()->json($this->livroService->update($validated, $id), 200);
     }
 
     public function excluirLivro($id)
     {
-        $livro = Livro::find($id);
-
-        if (!$livro) {
-            return response()->json(['message' => 'Livro não encontrado'], 404);
-        }
-
-        $livro->delete();
-
-        return response()->json(['message' => 'Livro excluído com sucesso']);
+        $this->livroService->delete($id);
+        return response()->json(['message' => 'Livro excluído com sucesso'], 200);
     }
 }
