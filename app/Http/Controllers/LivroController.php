@@ -11,17 +11,17 @@ class LivroController extends Controller
         $this->livroService = $livroService;
     }
 
-    public function retornaLivros()
+    public function findAll()
     {
         return response()->json($this->livroService->findAll());
     }
 
-    public function mostrarLivro($id)
+    public function find($id)
     {
         return response()->json($this->livroService->find($id));
     }
 
-    public function criarLivro(Request $request)
+    public function create(Request $request)
     {
         $validated = $request->validate([
             'titulo' => 'required|max:100',
@@ -33,7 +33,7 @@ class LivroController extends Controller
         return response()->json($this->livroService->create($validated), 201);
     }
 
-    public function atualizarLivro(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $validated = $request->validate([
             'titulo' => 'sometimes|required|max:100',
@@ -45,7 +45,7 @@ class LivroController extends Controller
         return response()->json($this->livroService->update($validated, $id), 200);
     }
 
-    public function excluirLivro($id)
+    public function delete($id)
     {
         $this->livroService->delete($id);
         return response()->json(['message' => 'Livro excluído com sucesso'], 200);

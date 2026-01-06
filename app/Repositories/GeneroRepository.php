@@ -13,6 +13,7 @@ class GeneroRepository
 
     public function find(int $id)
     {
+
         return Genero::find($id);
     }
 
