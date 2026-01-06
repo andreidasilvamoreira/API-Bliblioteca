@@ -2,36 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Autor;
+use App\Services\AutorService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class AutorController extends BaseController
 {
-    public function retornaAutores()
+    protected AutorService $autorService;
+    public function __construct(AutorService $autorService) {
+        $this->autorService = $autorService;
+    }
+    public function findAll()
     {
-        return Autor::all();
+        return $this->autorService->findAll();
     }
 
-    public function criarAutor(Request $request)
+    public function find($id)
     {
-        $validacao = $request->validate([
+        return response()->json($this->autorService->find($id));
+    }
+
+    public function create(Request $request)
+    {
+        $validated = $request->validate([
             'nome' => 'required|max:100',
         ]);
 
-        $autor = Autor::create($validacao);
-
-        return response()->json($autor, 201);
+        return response()->json($this->autorService->create($validated), 201);
     }
 
-    public function mostrarAutor($id)
-    {
-        $autor = Autor::find($id);
 
-        if (!$autor) {
-            return response()->json(['message' => 'Autor não encontrado'], 404);
-        }
-
-        return response()->json($autor);
-    }
 }

@@ -2,38 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genero;
+use App\Services\GeneroService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class GeneroController extends BaseController
 {
-    public function retornaGeneros()
-    {
-        return Genero::all();
-
+    protected GeneroService $generoService;
+    public function __construct(GeneroService $generoService) {
+        $this->generoService = $generoService;
     }
 
-    public function criarGenero(Request $request)
+    public function findAll()
     {
-        $validacao = $request->validate([
+        return $this->generoService->findAll();
+    }
+
+    public function find($id)
+    {
+        return response()->json($this->generoService->find($id));
+    }
+
+    public function create(Request $request)
+    {
+        $validated = $request->validate([
             'nome' => 'required|max:50',
         ]);
 
-        $genero = Genero::create($validacao);
-
-        return response()->json($genero, 201);
+        return response()->json($this->generoService->create($validated), 201);
     }
 
-    public function mostrarGenero($id)
-    {
-        $genero = Genero::find($id);
 
-        if (!$genero) {
-            return response()->json(['message' => 'Gênero não encontrado'], 404);
-        }
-
-        return response()->json($genero);
-    }
 
 }
