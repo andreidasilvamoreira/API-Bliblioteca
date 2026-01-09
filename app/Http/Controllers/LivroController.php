@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\LivroService;
+use App\Http\Requests\StoreLivroRequest;
+use App\Http\Requests\UpdateLivroRequest;
+use App\Http\Resources\LivroResource;
+
 class LivroController extends Controller
 {
     protected LivroService $livroService;
@@ -13,36 +17,35 @@ class LivroController extends Controller
 
     public function findAll()
     {
-        return response()->json($this->livroService->findAll());
+        $livros = $this->livroService->findAll();
+        return response()->json([
+            'data' => LivroResource::collection($livros)
+        ], 200);
     }
 
     public function find($id)
     {
-        return response()->json($this->livroService->find($id));
+        $livro = $this->livroService->find($id);
+        return response()->json([
+            'data' => new LivroResource($livro)
+        ]);
     }
 
-    public function create(Request $request)
+    public function create(StoreLivroRequest $request)
     {
-        $validated = $request->validate([
-            'titulo' => 'required|max:100',
-            'descricao' => 'required',
-            'genero_id' => 'required|exists:generos,id',
-            'autor_id' => 'required'
-        ]);
-
-        return response()->json($this->livroService->create($validated), 201);
+        $livro = $this->livroService->create($request->validated());
+        return response()->json([
+            'data' => new LivroResource($livro),
+            'message' => 'Livro criado com sucesso!'
+        ], 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateLivroRequest $request, $id)
     {
-        $validated = $request->validate([
-            'titulo' => 'sometimes|required|max:100',
-            'descricao' => 'sometimes|required',
-            'genero_id' => 'sometimes|required|exists:generos,id',
-            'autor_id' => 'sometimes|required|exists:autores,id'
-        ]);
-
-        return response()->json($this->livroService->update($validated, $id), 200);
+        $livro = $this->livroService->update( $request->validated(),$id);
+        return response()->json([
+            'data' => new LivroResource($livro),
+            'message' => 'Livro atualizado com sucesso!'], 200);
     }
 
     public function delete($id)

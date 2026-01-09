@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGeneroRequest;
+use App\Http\Resources\GeneroResource;
 use App\Services\GeneroService;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class GeneroController extends BaseController
@@ -15,23 +16,26 @@ class GeneroController extends BaseController
 
     public function findAll()
     {
-        return $this->generoService->findAll();
+        $generos = $this->generoService->findAll();
+        return response()->json([
+            'data' => GeneroResource::collection($generos)
+        ], 200);
     }
 
     public function find($id)
     {
-        return response()->json($this->generoService->find($id));
+        $genero = $this->generoService->find($id);
+        return response()->json([
+            'genero' => new GeneroResource($genero)
+        ], 200);
     }
 
-    public function create(Request $request)
+    public function create(StoreGeneroRequest $request)
     {
-        $validated = $request->validate([
-            'nome' => 'required|max:50',
-        ]);
-
-        return response()->json($this->generoService->create($validated), 201);
+        $genero = $this->generoService->create($request->validated());
+        return response()->json([
+            'data' => new GeneroResource($genero),
+            'message' => 'Livro criado com sucesso'
+        ], 201);
     }
-
-
-
 }
