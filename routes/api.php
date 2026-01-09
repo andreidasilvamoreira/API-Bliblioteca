@@ -7,15 +7,15 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/livros', [LivroController::class, 'findAll']);
-Route::get('/livro/{id}', [LivroController::class, 'find']);
-Route::post('/livro', [LivroController::class, 'create']);
-Route::put('/livro/{id}', [LivroController::class, 'update']);
-Route::delete('/livro/{id}', [LivroController::class, 'delete']);
+Route::get('/livros/{id}', [LivroController::class, 'find']);
+Route::post('/livros', [LivroController::class, 'create']);
+Route::put('/livros/{id}', [LivroController::class, 'update']);
+Route::delete('/livros/{id}', [LivroController::class, 'delete']);
 
 Route::get('/autores', [AutorController::class, 'findAll']);
-Route::get('/autor/{id}', [AutorController::class, 'find']);
-Route::post('/autor', [AutorController::class, 'create']);
+Route::get('/autores/{id}', [AutorController::class, 'find']);
+Route::post('/autores', [AutorController::class, 'create']);
 
 Route::get('/generos', [GeneroController::class, 'findAll']);
-Route::get('/genero/{id}', [GeneroController::class, 'find']);
-Route::post('/genero', [GeneroController::class, 'create']);
+Route::get('/generos/{id}', [GeneroController::class, 'find']);
+Route::post('/generos', [GeneroController::class, 'create']);
