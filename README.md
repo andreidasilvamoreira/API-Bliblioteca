@@ -25,8 +25,7 @@ API REST desenvolvida em Laravel para gerenciamento de uma biblioteca, permitind
 
 ## ▶️ Como executar o projeto
 ```bash
-git clone https://github.com/seu-usuario/API-Biblioteca.git
-cd API-Biblioteca
+git clone https://github.com/andreidasilvamoreira/api-library-laravel
 composer install
 cp .env.example .env  || *mude as configurações no .env conforme seu banco de dados*
 php artisan key:generate
