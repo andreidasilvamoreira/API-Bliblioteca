@@ -1,33 +1,32 @@
+# 📚 Library API
 
----
-# API Biblioteca
+REST API developed with **Laravel** to manage a library system, allowing the control of books, authors, and genres.
 
-API REST desenvolvida em Laravel para gerenciamento de uma biblioteca, permitindo o controle de livros, autores e gêneros.
-
-## 🛠️ Tecnologias
+## 🛠️ Technologies
 - PHP
 - Laravel
 - MySQL
-- API REST
+- REST API
 
-## 📂 Funcionalidades
-- Cadastro, listagem, edição e remoção de livros
-- Gerenciamento de autores
-- Gerenciamento de gêneros
-- Relacionamentos entre entidades
+## 📂 Features
+- Create, list, update, and delete books
+- Author management
+- Genre management
+- Entity relationships
 
-## 🧠 Conceitos aplicados
-- Arquitetura MVC
+## 🧠 Applied Concepts
+- MVC architecture
 - Repository Pattern
-- Validações
-- Migrations
-- Relacionamentos Eloquent
+- Data validation
+- Database migrations
+- Eloquent relationships
 
-## ▶️ Como executar o projeto
+## ▶️ How to run the project
+
 ```bash
 git clone https://github.com/andreidasilvamoreira/api-library-laravel
 composer install
-cp .env.example .env  || *mude as configurações no .env conforme seu banco de dados*
+cp .env.example .env # Update the .env file with your database credentials
 php artisan key:generate
 php artisan migrate
 php artisan serve
